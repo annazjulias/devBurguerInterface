@@ -8,17 +8,20 @@ export const Container = styled.div`
 display: flex;
 height: 100vh;
 width: 100vw;
+;
+
 `;
 export const RightContainer = styled.div`
 display: flex;
 align-items: center;
 justify-content: center;
 flex-direction: column;
-height:100%;
+height:100vh;
 width:100%;
 max-width: 50%;
-background: url('${Backgraud2}');
+background: url('${Backgraud2}') ;
 background-color: #1e1e1e;
+
 
 p{
   color:#ffff;
@@ -32,15 +35,16 @@ p{
 `
 
 export const LeftContainer = styled.div`
-background: url('${Backgraud}');
+background: url('${Backgraud}') ;
 background-size: cover;
 background-position: center;
-height:100%;
+height:100vh;
 width:100%;
 display: flex;
 align-items: center;
 justify-content: center;
 max-width: 50%;
+
 
 
 img{
