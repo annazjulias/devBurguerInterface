@@ -1,9 +1,11 @@
+import { CardProvider } from "./cartcontext";
 import { UserProvider } from "./usercontext";
 
 const AppProvider = ({ children }) => {
   return <UserProvider>
-    {children}
+    <CardProvider>{children}</CardProvider>
   </UserProvider>
+
 }
 
 

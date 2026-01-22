@@ -1,10 +1,14 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 export const Container = styled.div`
-.carrousel-item {
-  padding-right: 40px;
 
+.carrousel-item {
+  padding-right: 20px;
 }
+.react-multi-carousel-list{
+  margin-top: 15px;
+}
+
 `
 
 export const Title = styled.div`
@@ -16,7 +20,7 @@ position: relative;
 text-align: center;
 text-transform: uppercase;
 margin-bottom: 20px;
-margin-top: 20px;
+padding-top: 3px;
 
 &::after {
   content: '';
@@ -30,6 +34,7 @@ margin-top: 20px;
 `
 
 export const ContainerItens = styled.div`
+
 margin-left: 28px ;
   background-image: url(${props => props.$imageUrl});
   background-position: center;
@@ -37,23 +42,25 @@ margin-left: 28px ;
   display: flex;
   align-items: center;
   padding: 20px 10px;
-  width: 84%;
+  width: 88%;
   height: 250px;
   border-radius: 14px;
-  margin-top: 40px;
-
-
 `
-export const CategoryButton = styled(Link)`
-color: white;
+
+
+export const CategoryButton = styled.button`
+  color: white;
   background-color: rgba(0,0,0, 0.5);
   padding: 10px 20px;
   border-radius: 30px;
   font-size: 22.5px;
   margin-top: 100px;
-  font-weight: 500px;
+  font-weight: 500;
   text-decoration: none;
+  border: none;
+  cursor: pointer;
+
   &:hover {
     background-color: #9758a6;
   }
-`
+`;

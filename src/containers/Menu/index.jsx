@@ -1,55 +1,65 @@
 import { useEffect, useState } from 'react';
-import { Container, Banner, ProductsContainer, CategoryMenu, CategoryButton, ButtonVoltar } from './styled';
+import { useLocation, useNavigate } from 'react-router-dom';
+
+import {
+  Container,
+  Banner,
+  ProductsContainer,
+  CategoryMenu,
+  CategoryButton
+} from './styled';
+
 import { api } from '../../services/api';
 import { formatPice } from '../../utils/FormatPrice';
 import { CardProduct } from '../../components/CardProdut';
-import { useLocation, useNavigate } from 'react-router-dom';
 
 export function Menu() {
-
   const { search } = useLocation();
-  const query = new URLSearchParams(search);
-
-  const [activeCategory, setActiveCategory] = useState(() => {
-    const categoryId = +query.get('category');
-    return isNaN(categoryId) ? 0 : categoryId;
-  });
-
-
-
-  const [categories, setCategories] = useState([]);
-  const [products, setProducts] = useState([]);
-
-  const [filteredProducts, setFilteredProducts] = useState([]);
   const navigate = useNavigate();
 
+  const query = new URLSearchParams(search);
+
+  const [activeCategory, setActiveCategory] = useState(0);
+  const [categories, setCategories] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+
+  // 🔹 Sincroniza categoria com a URL
   useEffect(() => {
-    async function loadCategories() {
-      const { data } = await api.get('/categories');
-      const newCategories = [{ id: 0, name: 'Todas' }, ...data];
-      setCategories(newCategories);
-    }
+    const categoryId = Number(query.get('category')) || 0;
+    setActiveCategory(categoryId);
+  }, [search]);
 
-    async function loadProducts() {
-      const { data } = await api.get('/products');
-      const newProducts = data.map(product => ({
-        currencyValue: formatPice(product.price),
+  // 🔹 Carrega categorias e produtos
+  useEffect(() => {
+    async function loadData() {
+      const [{ data: categoriesData }, { data: productsData }] =
+        await Promise.all([
+          api.get('/categories'),
+          api.get('/products'),
+        ]);
+
+      setCategories([{ id: 0, name: 'Todas' }, ...categoriesData]);
+
+      const formattedProducts = productsData.map(product => ({
         ...product,
+        currencyValue: formatPice(product.price),
       }));
-      setProducts(newProducts);
+
+      setProducts(formattedProducts);
     }
 
-    loadCategories();
-    loadProducts();
+    loadData();
   }, []);
 
+  // 🔹 Filtra produtos pela categoria ativa
   useEffect(() => {
     setFilteredProducts(
       activeCategory === 0
         ? products
         : products.filter(
-          (product) => product.category_id === activeCategory
-        )
+            product => product.category_id === activeCategory
+          )
     );
   }, [products, activeCategory]);
 
@@ -65,35 +75,27 @@ export function Menu() {
           <span>Esse cardápio está irresistível!</span>
         </h1>
       </Banner>
-      <ButtonVoltar
-        onClick={() => navigate('/')}
-      >
-        <h1>voltar</h1>
-      </ButtonVoltar>
+
       <CategoryMenu>
         {categories.map(category => (
-          <CategoryButton
-            key={category.id}
-            $isActiveCategory={category.id === activeCategory}
-            onClick={() => {
-              navigate(
-                {
-                  pathname: '/cardapio',
-                  search: `?categoria=${category.id}`,
-                },
-                { replace: true }
-              );
-              setActiveCategory(category.id);
-            }}
-          >
-            {category.name}
-          </CategoryButton>
+     <CategoryButton
+     $isActiveCategory={category.id === activeCategory}
+     onClick={() =>
+       navigate(`/cardapio?category=${category.id}`, { replace: true })
+     }
+   >
+     {category.name}
+   </CategoryButton>
+   
         ))}
       </CategoryMenu>
 
       <ProductsContainer>
         {filteredProducts.map(product => (
-          <CardProduct product={product} key={product.id} />
+          <CardProduct
+            key={product.id}
+            product={product}
+          />
         ))}
       </ProductsContainer>
     </Container>

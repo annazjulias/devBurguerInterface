@@ -1,7 +1,6 @@
-import { CategoryCarousel } from "../../components/CategoryCarousel"
-import { OfertasCarousel } from "../../components/OfertasCarrosel"
+import { CategoryCarousel, OfertasCarousel } from "../../components"
+
 import { Banner, Container } from "./styles"
-import { useUser } from "../../hooks/usercontext"
 
 export function Home() {
   return (
@@ -10,8 +9,10 @@ export function Home() {
         <h1>Bem-Vindo(a)!</h1>
       </Banner>
       <Container>
+    <div>
         <CategoryCarousel />
         <OfertasCarousel />
+    </div>
       </Container>
     </main>
   )

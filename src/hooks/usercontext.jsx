@@ -3,7 +3,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 const UserContext = createContext({});
 
 export const UserProvider = ({ children }) => {
-  const [userInfo, setUserInfo] = useState({ });
+  const [userInfo, setUserInfo] = useState({});
   const putUserData = (userInfo) => {
     setUserInfo(userInfo);
 
@@ -11,18 +11,19 @@ export const UserProvider = ({ children }) => {
   }
 
   const logout = () => {
-  localStorage.removeItem('devburguer:userData');
-  }
+    setUserInfo({});
+    localStorage.removeItem('devburguer:userData');
+  };
 
   useEffect(() => {
     const userInfoLocals = localStorage.getItem('devburguer:userData');
-    if(userInfoLocals){
-      setUserInfo( JSON.parse(userInfoLocals) );
+    if (userInfoLocals) {
+      setUserInfo(JSON.parse(userInfoLocals));
     }
-    },[]);
+  }, []);
 
   return (
-    <UserContext.Provider value={{ userInfo, setUserInfo, putUserData }}>
+    <UserContext.Provider value={{ userInfo, setUserInfo, putUserData, logout }}>
       {children}
     </UserContext.Provider>
   )

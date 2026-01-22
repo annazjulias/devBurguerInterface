@@ -1,19 +1,20 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
+
 margin-left: 28px;
 display: flex;
 flex-direction:column;
 align-items: center;
 gap: 25px;
-padding: 20px;
+padding: 20px 20px;
 border-radius: 5px;
 background-color: #ffff;
 cursor: grab;
 box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 max-width: 390px; 
 position: relative;
-
+width: 89%;
 div{
   width: 100%;
   height: 110px;

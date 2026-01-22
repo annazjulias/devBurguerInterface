@@ -52,7 +52,7 @@ justify-content: center;
 gap: 50px;
 margin-top: 30px;
 `
-export const CategoryButton = styled(Link)`
+export const CategoryButton = styled.button`
 text-decoration: none;
 cursor: pointer;
 background: none;
@@ -76,18 +76,3 @@ max-width: 1450px;
 margin: 100px auto;
 
 `
-
-export const ButtonVoltar = styled(Link) `
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  background: none;
-  border: none;
-  font-size: 16px;
-  color: #9758a6;
-  text-decoration: none;
-  cursor: pointer;
-
-  &:hover {
-    text-decoration: underline;
-  }`

@@ -2,14 +2,14 @@ import styled from "styled-components";
 
 export const Container = styled.div`
 .carrousel-item {
-  padding-right: 20px;
   margin: 0 auto;
 
 }
 overflow-x: hidden;
-
 .react-multi-carousel-list{
   overflow: visible;
+margin-top: 40px;
+
 }
 
 
@@ -27,7 +27,7 @@ position: relative;
 text-align: center;
 text-transform: uppercase;
 margin-bottom: 80px;
-margin-top: 80px;
+margin-top: 100px;
 
 
 &::after {
@@ -40,4 +40,3 @@ margin-top: 80px;
   left: calc(50% - 35px);
 }
 `
-

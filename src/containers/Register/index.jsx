@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 export function Register() {
   const navigate = useNavigate()
 
-  
+
   const schema = yup.object({
     name: yup.string().required('O nome é obrigatório'),
     email: yup.string().email("Digite um e-mail valido").required("O e-mail é obrigatorio!"),
@@ -22,56 +22,57 @@ export function Register() {
   }).required();
 
   const { register, handleSubmit,
-     formState:{ errors } } = useForm({
-    resolver: yupResolver(schema)
-  });
-console.log(errors)
+    formState: { errors } } = useForm({
+      resolver: yupResolver(schema)
+    });
+  console.log(errors)
 
   const onSubmit = async data => {
 
-try { const {status} = await 
-api.post('/users', 
-  {
-  name: data.name,
-email: data.email,
-password: data.password,
-},
-{
-validateSatus: () => true,
-},
+    try {
+      const { status } = await
+        api.post('/users',
+          {
+            name: data.name,
+            email: data.email,
+            password: data.password,
+          },
+          {
+            validateSatus: () => true,
+          },
 
-)
-if(status === 200 || status === 201) {
-  setTimeout(() => {
-    navigate('/login')
-  }, 2000);
-toast.success('Conta criada com sucesso!')
-} else if (status === 400){
-toast.error('Falha no sistema, tente novamente!')
-} else {
-  throw new Error()
-}
+        )
+      if (status === 200 || status === 201) {
+        setTimeout(() => {
+          navigate('/login')
+        }, 2000);
+        toast.success('Conta criada com sucesso!')
+      } else if (status === 400) {
+        toast.error('Falha no sistema, tente novamente!')
+      } else {
+        throw new Error()
+      }
 
-  
-} catch (error) {
-  toast.error('Email ja cadastrado! Faça login para continuar!')
-}
-  
+
+    } catch (error) {
+      toast.error('Email ja cadastrado! Faça login para continuar!')
+    }
+
     console.log(status)
   }
 
   return (
     <Container>
       <LeftContainer>
-        <img src={Logo} alt='logo-devburger'/>
+        <img src={Logo} alt='logo-devburger' />
       </LeftContainer>
       <RightContainer>
         <Title>
-       Criar Conta
+          Criar Conta
         </Title>
 
         <Form onSubmit={handleSubmit(onSubmit)}>
-        <InputContainer>
+          <InputContainer>
             <label>Nome</label>
             <input type='text' {...register("name")} />
             <p>{errors?.name?.message}</p>
@@ -96,7 +97,7 @@ toast.error('Falha no sistema, tente novamente!')
           </InputContainer>
           <Button type="submit" >Criar Conta</Button>
         </Form>
-       <p>Já possui conta?  <Link to="/login">Clique aqui.</Link></p>
+        <p>Já possui conta?  <Link to="/login">Clique aqui.</Link></p>
       </RightContainer>
     </Container>
   );
